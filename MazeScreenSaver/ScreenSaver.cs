@@ -6,10 +6,9 @@
 
 namespace MazeScreenSaver
 {
-    using MazeGenerator.Generator;
-    using MazeGenerator.Type;
-    using MazeGenerator.Type.Base;
-    using MazeGenerator.Type.MazeObject;
+    using MazeGenerator.Generators;
+    using MazeGenerator.Types.Base;
+    using MazeGenerator.Types.Mazes;
     using System;
     using System.Collections.Generic;
     using System.Drawing;
@@ -34,7 +33,15 @@ namespace MazeScreenSaver
         {
             this.InitializeComponent();
 
-            this.mazeGenerator = new DefaultMaze(100, 200) { Configuration = new Configuration(5, 5) };
+            this.mazeGenerator = new DefaultMazeGenerator(100, 100)
+            {
+                Configuration = new()
+                {
+                    ProbabilityCursorToSplit = 5,
+                    NbMaxRunningCursor = 5,
+                    WaitingTimeCursorMs = 50,
+                }
+            };
 
             Maze maze = this.mazeGenerator.InitMaze();
             maze.MazeCellUpdated += this.Maze_MazeCellUpdated;
